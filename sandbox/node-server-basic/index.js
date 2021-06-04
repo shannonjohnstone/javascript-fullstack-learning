@@ -1,10 +1,7 @@
 const http = require("http")
 
 const { requestHandler } = require("./routes")
-
-function requestListener(requestHandler)
-
-const server = http.createServer(requestListener)
+const server = http.createServer(requestHandler)
 
 server.listen(8000, () => {
   console.log("Server running")
