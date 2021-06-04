@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 
 function requestHandler(req, res) {
   req.on("end", () => console.log("Server end"))
@@ -8,12 +9,12 @@ function requestHandler(req, res) {
     const body = []
     
     req.on('data', chunk => body.push(chunk))
-    
+
     return req.on('end', () => {
       const parseBody = Buffer.concat(body).toString();
       const message = parseBody.split("=")[1];
   
-      fs.writeFile("message.txt", message, (err) => {
+      fs.writeFile(`${__dirname}/message.txt`, message, (err) => {
         res.statusCode = 302;
         res.setHeader("Location", "/");
         return res.end();
@@ -28,9 +29,15 @@ function requestHandler(req, res) {
   }
   
   if (url === "/html") {
-    res.writeHead(200, { 'Content-Type': 'text/html' })
+    return fs.readFile(`${__dirname}/index.html`, (err, content) => {
+      res.writeHead(200, { "Content-Type": "text/html" })
+      res.end(content, "utf-8")
+    })
+  }
+  
+  if (url === "/html-snippet") {
     
-    res.write(`<h1>HTML response example</h1>`)
+    res.write(`<h1>HTML response example, node serving HTML snippet</h1>`)
     
     res.write(`
       <form action="/message" method="POST">
