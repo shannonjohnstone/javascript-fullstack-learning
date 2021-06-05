@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 
 function requestHandler(req, res) {
   req.on("end", () => console.log("Server end"))
@@ -36,7 +35,6 @@ function requestHandler(req, res) {
   }
   
   if (url === "/html-snippet") {
-    
     res.write(`<h1>HTML response example, node serving HTML snippet</h1>`)
     
     res.write(`
