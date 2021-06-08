@@ -1,11 +1,10 @@
-const express = require("express");
+import express from "express";
+import { requestHandler } from "./routes.js";
 
 const app = express();
 
-const { requestHandler } = require("./routes");
-
-
 app.use(requestHandler);
+app.use(() => console.log("Next middleware"));
 
 const PORT = process.env.PORT ?? 8000;
 

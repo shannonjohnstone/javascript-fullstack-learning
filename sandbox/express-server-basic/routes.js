@@ -1,6 +1,6 @@
-const fs = require("fs");
+import fs from "fs";
 
-function requestHandler(req, res) {
+export function requestHandler(req, res, next) {
   req.on("end", () => console.log("Server end"))
   
   const { url, method } = req;
@@ -49,8 +49,5 @@ function requestHandler(req, res) {
 
   res.writeHead(200, { 'Content-Type': 'text/plain' })
   res.end('okay')
-}
-
-module.exports = {
-  requestHandler
+  next()
 }
